@@ -86,9 +86,9 @@ Advanced time series generation with configurable violations and fully determini
 
 ### Supported Violations
 
-| **Category** | **Description** |
+| **Category** | **Violation Name** |**Description**|
 |--------------|----------------|-----------------|
-| **Confounding** | V_conf₁, V_conf₂ | External/internal common causes |
+| **Confounding** | V_conf₁  | External/internal common causes |
 | **Measurement Noise** | V_obs | Various observational noise types |
 | **Faithfulness** | V_faith| Unfaithfulness through path cancellation or near-zero coefficients|
 | **Functional Form** | V_func| Nonlinear effects|
