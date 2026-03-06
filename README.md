@@ -1,5 +1,8 @@
 # Time Series Causal Discovery Arena (TCD Arena)
 
+
+!UNDER CONSTRUCTION!
+
 [![arXiv](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/) 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
@@ -83,15 +86,15 @@ Advanced time series generation with configurable violations and fully determini
 
 ### Supported Violations
 
-| **Category** | **Violations** | **Description** |
+| **Category** | **Description** |
 |--------------|----------------|-----------------|
 | **Confounding** | V_conf₁, V_conf₂ | External/internal common causes |
-| **Measurement Noise** | V_obs,add/mul/time/auto/com/shock | Various observational noise types |
-| **Faithfulness** | V_faith₁, V_faith₂ | Canceling lagged/instantaneous effects |
-| **Functional Form** | V_func₁₋₄ | Nonlinear, nonmonotonic, GP-RBF functions |
-| **Innovation Noise** | V_ino,mul/auto/com/time/shock/uni/weib/var | Innovation noise variations |
-| **Stationarity** | V_stat | Time-varying causal relationships |
-| **Data Quality** | V_length, V_q₁, V_q₂, V_scale₁ | Length, missing data, scaling issues |
+| **Measurement Noise** | V_obs | Various observational noise types |
+| **Faithfulness** | V_faith| Unfaithfulness through path cancellation or near-zero coefficients|
+| **Functional Form** | V_func| Nonlinear effects|
+| **Innovation Noise** | V_inno | Innovation noise variations |
+| **Stationarity** | V_stat,V_coef | Time-varying causal relationships |
+| **Data Quality** | V_length, V_mar, ... | Data quality issues |
 
 ### Usage
 ```bash
@@ -104,21 +107,9 @@ python generate_dataset.py -m name=my_dataset
 # Generate all violation types (paper datasets)
 ./create_all_violations.sh
 
-# Generate with custom parameters
-python generate_dataset.py -m name=custom \
-    generator.n_samples=50 \
-    generator.length=1000 \
-    generator.ino_n.non_additive_noise_proba=0.2
 ```
+See the README in the synthetic_ds_generator for more details.
 
-### Output Format
-Each dataset includes:
-- `X.npy`: Time series data (3D array: samples × time × variables)  
-- `Y.npy`: Lagged causal structure (4D array)
-- `instant_links.npy`: Instantaneous causal structure (3D array)
-- `nl.npy`: Nonlinearity flags for lagged links
-- `nl_instant.npy`: Nonlinearity flags for instantaneous links
-- `config.yaml`: Complete hyperparameter specification
 
 ## 🔧 2. Causal Discovery Zoo (`cd_zoo/`)
 
@@ -516,12 +507,13 @@ Enhance the analysis pipeline:
 If you use TCD Arena in your research, please cite:
 
 ```bibtex
-@article{tcd_arena2025,
-  title={Time Series Causal Discovery Arena: A Comprehensive Benchmark for Robustness Analysis},
-  author={Your Authors},
-  journal={Conference/Journal Name},
-  year={2025},
-  url={https://github.com/your-repo/tcd_arena}
+@inproceedings{
+stein2026tcdarena,
+title={{TCD}-Arena: Assessing Robustness of Time Series Causal Discovery Methods Against Assumption Violations},
+author={Gideon Stein and Niklas Penzel and Tristan Piater and Joachim Denzler},
+booktitle={The Fourteenth International Conference on Learning Representations},
+year={2026},
+url={https://openreview.net/forum?id=MtdrOCLAGY}
 }
 ```
 
