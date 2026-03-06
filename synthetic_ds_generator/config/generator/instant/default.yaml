@@ -1,0 +1,26 @@
+_target_: components.instantanous_effects.InstantanousEffects
+
+n_vars : ${n_vars}
+link_proba: 0.0
+param_range: [0.3, 0.5]
+mirror_range: True
+sample_tries: 50
+nonlinear_proba: ${nonlinear_proba}
+nonstationary_change:  ${nonstationary_change}
+
+nl_sampler:
+
+  _target_: components.nl_sampler.NL_function_generator
+  nl_mode: ${nl_mode}
+
+  limit_startx: [-1.0, 1.0]
+  hard_limitx: 1.1
+  limit_starty: [-1.0, 1.0]
+  hard_limity: [-1.1, 1.1]
+  power_dist:  ${power_dist}
+  which_power_dist: "all"
+  rbf_length_scale: 1
+  spline_samples:  ${spline_samples}
+  n_nl_stacking: 2
+  n_nl_operators: 2
+  n_options: 10

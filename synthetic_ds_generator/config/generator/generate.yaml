@@ -1,0 +1,25 @@
+_target_: data_generator.SyntheticDataGenerator
+
+
+defaults:
+  - _self_
+  - obs_n: default.yaml
+  - inno_n: default.yaml
+  - lagged: default.yaml
+  - exog: default.yaml
+  - instant: default.yaml
+
+
+verbose: 0
+normalize: Null
+time_series_n: 250
+standardization_factor: 1
+change_points: []
+drop_struc_for_window: False
+nonstationary: False
+interpolate: 0.0
+remove_n_variables_for_confounding: 0
+section_tolerance: 50
+sample_attempts: 10
+missingness_type: "MCAR"
+missingness_base_path: "tools_and_examples/semi_synthetic_bases/rivers_ts_flood.csv"

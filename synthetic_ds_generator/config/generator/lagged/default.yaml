@@ -1,0 +1,34 @@
+_target_: components.lagged_effects.LaggedEffects
+
+verbose: 0
+n_vars : ${n_vars}
+max_lags: 3
+link_proba: 0.15
+param_range: [0.3, 0.5]
+mirror_range: True
+
+nonlinear_proba: ${nonlinear_proba}
+nonstationary_change:  ${nonstationary_change}
+test_for_var_stability: True
+stability_tolerance: 100
+alternative_coeff_ts: 0
+alternativ_parameter_range: [0.3, 0.5]
+alternative_link_proba: 0.15
+
+
+nl_sampler:
+
+  _target_: components.nl_sampler.NL_function_generator
+  nl_mode: ${nl_mode}
+
+  limit_startx: [-1.0, 1.0]
+  hard_limitx: 1.1
+  limit_starty: [-1.0, 1.0]
+  hard_limity: [-1.1, 1.1]
+  power_dist:  ${power_dist}
+  which_power_dist: "all"
+  rbf_length_scale: 1
+  spline_samples:  ${spline_samples}
+  n_nl_stacking: 2
+  n_nl_operators: 2
+  n_options: 10

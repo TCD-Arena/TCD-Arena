@@ -1,0 +1,21 @@
+_target_: components.noise_generator.NoiseGenerator
+
+modus: "obs"
+additive: False
+multiplicative:  False
+time_dependent:  False
+autoregressive:  False
+common: False
+semi_synthetic: False
+shock: False
+shock_proba:  0.05
+time_dependent_cycle: "mean_var_shift"
+shock_size: 5
+snr: null
+non_additive_noise_proba: 0
+autoregressive_innovation: 0.5
+non_gaussian_additive: 0.0
+non_equal_variance_range: False
+scale_for_time_dependent: 0.005
+which_non_gaussian: "weibull"
+semi_synthetic_noise_path: "tools_and_examples/semi_synthetic_bases/"
