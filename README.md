@@ -1,7 +1,6 @@
 # Time Series Causal Discovery Arena (TCD Arena)
 
 
-!UNDER CONSTRUCTION!
 
 [![arXiv](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/) 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
@@ -39,8 +38,16 @@ conda activate cd_zoo_env
 
 # Run causal discovery benchmark
 cd ../cd_zoo
-python benchmark.py method=pcmci data_path=../rename_after_generation/example_dataset
+python benchmark.py
 ```
+
+Note, we include a placeholder cd_zoo here. 
+To install the full cd_zoo run: 
+```bash
+rm cd_zoo -r
+git clone https://github.com/TCD-Arena/cd_zoo
+```
+
 
 ## 📁 Project Structure
 
@@ -54,24 +61,10 @@ tcd_arena/
 │   └── synth_gen_env.yml              # Conda environment
 ├── cd_zoo/                            # 🔧 Causal Discovery Methods Zoo
 │   ├── benchmark.py                   # Main benchmarking script
-│   ├── methods/                       # 15+ method implementations
+│   ├── methods/                       # 15+ method implementations (SEE INSTALLATION)
 │   ├── tools/                         # Scoring and utility functions
 │   ├── config/                        # Method configurations
-│   └── cd_zoo_env.yml                 # Conda environment
-├── robustness_experiments/            # 📊 Robustness Analysis Pipeline
-│   ├── 1_extract_results.py           # Result extraction & validation
-│   ├── 2_generate_curve_analysis.py   # Performance degradation analysis
-│   ├── 3_export_summary_tables.py     # Summary statistics generation
-│   ├── 4_generate_main_graphics.py    # Visualization generation
-│   └── config/                        # Experiment configurations
-├── ensembling_experiments/            # 🤖 Ensemble Learning Suite
-│   ├── 5_train_ensembles.py           # Meta-learner training
-│   ├── 7_predict_with_best_methods.py # Best method ensemble
-│   ├── 8_train_deep_ensembles.py      # Deep learning ensembles
-│   ├── causalrivers/                  # CausalRivers integration
-│   └── dl_components/                 # Deep learning components
-├── rename_after_generation/           # 📂 Generated dataset storage
-└── legacy_content/                    # 📜 Legacy experimental code
+├── rename_after_generation/           # 📂 Generated dataset storage (RUN)
 ```
 
 ## 🧪 1. Synthetic Data Generator (`synthetic_ds_generator/`)

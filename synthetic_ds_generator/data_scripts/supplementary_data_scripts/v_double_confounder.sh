@@ -48,7 +48,6 @@ python generate_dataset.py -m name=conf_double_big n_vars=8 generator.lagged.alt
  generator.time_series_n=250,1000 seed=99 n_samples=100 generator.lagged.link_proba=0.075,0.15
   generator.instant.link_proba=0.,0.1 generator.lagged.alternativ_parameter_range='[0.8,0.9]' 
   generator.exog.param_range='[0.8,0.9]' generator.remove_n_variables_for_confounding=1 
-  output_dir=/home/datasets4/stein/robust_exp/data_release_supplementary/
 
 
 python generate_dataset.py -m name=double_common_big generator.obs_n.snr=0.05 

@@ -1,0 +1,176 @@
+seed: 99
+output_dir: "/path/to/output_dir/"
+name: no_violation_small
+run_name: ${hydra:job.num}
+n_samples: 100
+n_vars: 5
+nonlinear_proba: 0.0
+nonstationary_change: 0.0
+nl_mode: power_set
+power_dist:
+- 0.5
+- 1
+- 1
+- 2
+spline_samples: 4
+link_mask_path: null
+nl_mask_path: null
+instant_link_mask_path: null
+instant_nl_mask_path: null
+generator:
+  _target_: data_generator.SyntheticDataGenerator
+  verbose: 0
+  normalize: null
+  time_series_n: 250
+  standardization_factor: 1
+  change_points: []
+  drop_struc_for_window: false
+  nonstationary: false
+  interpolate: 0.0
+  remove_n_variables_for_confounding: 0
+  section_tolerance: 50
+  sample_attempts: 10
+  missingness_type: MCAR
+  missingness_base_path: tools_and_examples/semi_synthetic_bases/rivers_ts_flood.csv
+  obs_n:
+    _target_: components.noise_generator.NoiseGenerator
+    modus: obs
+    additive: false
+    multiplicative: false
+    time_dependent: false
+    autoregressive: false
+    common: false
+    semi_synthetic: false
+    shock: false
+    shock_proba: 0.05
+    time_dependent_cycle: mean_var_shift
+    shock_size: 5
+    snr: null
+    non_additive_noise_proba: 0
+    autoregressive_innovation: 0.5
+    non_gaussian_additive: 0.0
+    non_equal_variance_range: false
+    scale_for_time_dependent: 0.005
+    which_non_gaussian: weibull
+    semi_synthetic_noise_path: tools_and_examples/semi_synthetic_bases/
+  inno_n:
+    _target_: components.noise_generator.NoiseGenerator
+    modus: inno
+    additive: true
+    multiplicative: false
+    time_dependent: false
+    autoregressive: false
+    common: false
+    semi_synthetic: false
+    shock: false
+    shock_proba: 0.05
+    time_dependent_cycle: mean_var_shift
+    shock_size: 5
+    snr: null
+    non_additive_noise_proba: 0
+    autoregressive_innovation: 0.5
+    non_gaussian_additive: 0.0
+    non_equal_variance_range: false
+    scale_for_time_dependent: 0.005
+    which_non_gaussian: weibull
+    semi_synthetic_noise_path: tools_and_examples/semi_synthetic_bases/
+  lagged:
+    _target_: components.lagged_effects.LaggedEffects
+    verbose: 0
+    n_vars: ${n_vars}
+    max_lags: 3
+    link_proba: 0.075
+    param_range:
+    - 0.3
+    - 0.5
+    mirror_range: true
+    nonlinear_proba: ${nonlinear_proba}
+    nonstationary_change: ${nonstationary_change}
+    test_for_var_stability: true
+    stability_tolerance: 100
+    alternative_coeff_ts: 0
+    alternativ_parameter_range:
+    - 0.3
+    - 0.5
+    alternative_link_proba: 0.15
+    nl_sampler:
+      _target_: components.nl_sampler.NL_function_generator
+      nl_mode: ${nl_mode}
+      limit_startx:
+      - -1.0
+      - 1.0
+      hard_limitx: 1.1
+      limit_starty:
+      - -1.0
+      - 1.0
+      hard_limity:
+      - -1.1
+      - 1.1
+      power_dist: ${power_dist}
+      which_power_dist: all
+      rbf_length_scale: 1
+      spline_samples: ${spline_samples}
+      n_nl_stacking: 2
+      n_nl_operators: 2
+      n_options: 10
+  exog:
+    _target_: components.exog_influences.ExogenousInfluences
+    n_vars: ${n_vars}
+    n_exogs: 2
+    link_proba: 0.0
+    param_range:
+    - 0.3
+    - 0.5
+    mirror_range: true
+    nonlinear_proba: ${nonlinear_proba}
+    nl_sampler:
+      _target_: components.nl_sampler.NL_function_generator
+      nl_mode: ${nl_mode}
+      limit_startx:
+      - -1.0
+      - 1.0
+      hard_limitx: 1.1
+      limit_starty:
+      - -1.0
+      - 1.0
+      hard_limity:
+      - -1.1
+      - 1.1
+      power_dist: ${power_dist}
+      which_power_dist: all
+      rbf_length_scale: 1
+      spline_samples: ${spline_samples}
+      n_nl_stacking: 2
+      n_nl_operators: 2
+      n_options: 10
+  instant:
+    _target_: components.instantanous_effects.InstantanousEffects
+    n_vars: ${n_vars}
+    link_proba: 0.0
+    param_range:
+    - 0.3
+    - 0.5
+    mirror_range: true
+    sample_tries: 50
+    nonlinear_proba: ${nonlinear_proba}
+    nonstationary_change: ${nonstationary_change}
+    nl_sampler:
+      _target_: components.nl_sampler.NL_function_generator
+      nl_mode: ${nl_mode}
+      limit_startx:
+      - -1.0
+      - 1.0
+      hard_limitx: 1.1
+      limit_starty:
+      - -1.0
+      - 1.0
+      hard_limity:
+      - -1.1
+      - 1.1
+      power_dist: ${power_dist}
+      which_power_dist: all
+      rbf_length_scale: 1
+      spline_samples: ${spline_samples}
+      n_nl_stacking: 2
+      n_nl_operators: 2
+      n_options: 10

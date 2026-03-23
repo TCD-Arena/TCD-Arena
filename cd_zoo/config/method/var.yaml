@@ -1,0 +1,4 @@
+name: var
+max_lag: 3
+absolute_coefficients: True
+base_on: coefficients
