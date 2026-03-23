@@ -1,6 +1,6 @@
 # Time Series Causal Discovery Arena (TCD Arena)
 
-
+> **⚠️ Under Construction**: This repository is currently being prepared for public release. Some features and documentation may be incomplete.
 
 [![arXiv](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/) 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
@@ -36,8 +36,8 @@ python generate_dataset.py -m name=example_dataset
 conda env create -f cd_zoo/cd_zoo_env.yml  
 conda activate cd_zoo_env
 
-# Run causal discovery benchmark
-cd ../cd_zoo
+# Run causal discovery benchmark example
+cd .cd_zoo
 python benchmark.py
 ```
 
