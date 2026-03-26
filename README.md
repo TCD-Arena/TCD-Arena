@@ -21,8 +21,11 @@ TCD Arena is a research platform designed to systematically evaluate how causal 
 
 ```bash
 # Clone the repository
+
+# Clone the repository
 git clone https://github.com/your-repo/tcd_arena.git
-cd tcd_arena
+cd TCD-Arena
+
 
 # Set up environment for synthetic data generation
 conda env create -f tcd_arena.yml
@@ -33,34 +36,39 @@ conda activate tcd_arena
 
 #### 1. Data 
 
-Depending on your needs, you can choose one of three ways to access data
 
-1. Download the data examples from via: 
+Depending on your needs, you can choose one of three ways to access data:
+
+1. **Download example data** (single violation, quick test):
 
 ```bash
-wget https://github.com/CausalRivers/benchmark/releases/download/First_release/product.zip
-unzip product
-rm product.zip 
+
+wget https://github.com/TCD-Arena/TCD-Arena/releases/download/data/sample_datasets.zip
+unzip sample_datasets
+rm sample_datasets.zip
 ```
 
-The example files hold the data for a single assumption violation (MCAR)
-All scripts in the repo can be executed with the dataset.
-If you want to test functionality of TCD-Arena, this is the best option
+
+The example files hold the data for a single assumption violation (MCAR). All scripts in the repo can be executed with this dataset. If you want to test functionality of TCD-Arena, this is the best option.
 
 
-2. Download the full dataset from HuggingFace here:
 
-https://huggingface.co/datasets/GideonStein/TCD-Arena/
+2. **Download the full dataset** from HuggingFace (all 33 violations):
+
+https://huggingface.co/datasets/GideonStein/TCD-Arena/tree/main
 
 This is the full dataset we use in our publication, containing all 33 violations.
-If you want to score your own method on some (or all violations) this is your best option
+If you want to score your own method on some (or all violations) this is your best option.
 
 
-3. Regenerate the full dataset via functionality in synthetic_ds_generator
 
-We provide functionality in the data generator to full regenerate the data from scratch (fully seeded)
-We also include hashing functionality to test the exactness of the reproduction
-If you want to extend datasets, generate your own violations or alter existing once, this is your best option
+
+
+3. **Regenerate the full dataset** using the synthetic data generator:
+
+Use the scripts in `synthetic_ds_generator/` to fully regenerate the data from scratch (fully seeded). 
+Hashing functionality is included to verify exact reproduction. This is the best option if you want to extend datasets, generate your own violations, or alter existing ones.
+
 
 
 
@@ -68,63 +76,83 @@ If you want to extend datasets, generate your own violations or alter existing o
 
 #### 2. Benchmarking
 
-python cd_zoo/scripts/benchmark.py
+
+You can run a simple scoring for the GVAR approach via: 
+
+```bash
+
+./cd_zoo/scripts/run_var_on_mcar.sh
 ```
 
-Note, we include a placeholder cd_zoo here. 
-To install the full cd_zoo run: 
+# The python entry point can be found here:
 ```bash
-rm cd_zoo -r
+python cd_zoo/benchmark.py
+```
+
+Note: The repository includes a placeholder `cd_zoo`. To install the full `cd_zoo` with all methods, run:
+
+```bash
+rm -r cd_zoo
 git clone https://github.com/TCD-Arena/cd_zoo
 ```
-
-
-
-
-
-
 
 
 
 ## 📁 Project Structure
 
 ```
-tcd_arena/
-├── README.md                           # This comprehensive overview
-├── synthetic_ds_generator/             # 🧪 Synthetic Data Generation Suite
-│   ├── generate_dataset.py            # Main data generation script
-│   ├── components/                     # Modular generation components
-│   ├── config/                         # Hydra configuration files
-│   └── synth_gen_env.yml              # Conda environment
-├── cd_zoo/                            # 🔧 Causal Discovery Methods Zoo
-│   ├── benchmark.py                   # Main benchmarking script
-│   ├── methods/                       # 15+ method implementations (SEE INSTALLATION)
-│   ├── tools/                         # Scoring and utility functions
-│   ├── config/                        # Method configurations
-├── rename_after_generation/           # 📂 Generated dataset storage (RUN)
+main_repo/
+├── README.md                      # This overview
+├── tcd_arena.yml                  # Main environment file
+├── config/                        # Pipeline configuration files
+│   ├── 1_extract_results.yaml
+│   ├── 2_generate_curve_analysis.yaml
+│   └── 3_export_summary_tables.yaml
+├── 1_extract_results.py           # Step 1: Results extraction
+├── 2_generate_violation_curves.py # Step 2: Curve analysis
+├── 3_export_summary_tables.py     # Step 3: Summary tables
+├── plot.py                        # Plotting utilities
+├── cd_zoo/                        # 🔧 Causal Discovery Methods Zoo
+│   ├── benchmark.py               # Main benchmarking script
+│   ├── methods/                   # Method implementations
+│   ├── tools/                     # Scoring and utility functions
+│   ├── config/                    # Method configurations
+├── synthetic_ds_generator/        # 🧪 Synthetic Data Generation Suite
+│   ├── generate_dataset.py        # Main data generation script
+│   ├── create_all_violation_datasets.sh
+│   ├── components/                # Modular generation components
+│   ├── config/                    # Hydra configuration files
+│   └── data_scripts/              # Data scripts
+├── robustness_experiments/        # 📊 Robustness analysis pipeline
+│   ├── README.md
+├── example_saves/                 # Example outputs (pre-generated)
+├── sample_datasets/               # Sample datasets for quick tests
+├── sample_summary/                # Example summary outputs
 ```
+
 
 ## 🧪 1. Synthetic Data Generator (`synthetic_ds_generator/`)
 
 Advanced time series generation with configurable violations and fully deterministic seeding.
 
 ### Key Features
-- **27+ Assumption Violations**: Comprehensive coverage of causal discovery assumptions
+- **33 Assumption Violations**: Comprehensive coverage of causal discovery assumptions
 - **Modular Architecture**: Configurable structural equations, noise components, and functional relationships
 - **Hydra Integration**: Full parameter control and reproducibility
 - **Scalable Violation Strength**: Continuous violation severity levels
 
-### Supported Violations
 
-| **Category** | **Violation Name** |**Description**|
-|--------------|----------------|-----------------|
-| **Confounding** | V_conf₁  | External/internal common causes |
-| **Measurement Noise** | V_obs | Various observational noise types |
-| **Faithfulness** | V_faith| Unfaithfulness through path cancellation or near-zero coefficients|
-| **Functional Form** | V_func| Nonlinear effects|
-| **Innovation Noise** | V_inno | Innovation noise variations |
-| **Stationarity** | V_stat,V_coef | Time-varying causal relationships |
-| **Data Quality** | V_length, V_mar, ... | Data quality issues |
+### Supported Violation Categories (examples)
+
+| **Category**         | **Example Violation** | **Description**                       |
+|----------------------|----------------------|---------------------------------------|
+| Confounding          | V_conf₁              | External/internal common causes        |
+| Measurement Noise    | V_obs                | Various observational noise types      |
+| Faithfulness         | V_faith              | Path cancellation, near-zero coeffs    |
+| Functional Form      | V_func               | Nonlinear effects                     |
+| Innovation Noise     | V_inno               | Innovation noise variations            |
+| Stationarity         | V_stat, V_coef       | Time-varying causal relationships      |
+| Data Quality         | V_length, V_mar, ... | Data quality issues                   |
 
 ### Usage
 ```bash
@@ -138,7 +166,8 @@ python generate_dataset.py -m name=my_dataset
 ./create_all_violations.sh
 
 ```
-See the README in the synthetic_ds_generator for more details.
+See the README in `synthetic_ds_generator/` for more details.
+
 
 
 ## 🔧 2. Causal Discovery Zoo (`cd_zoo/`)
@@ -158,6 +187,7 @@ The framework includes extensive hyperparameter grids for robust evaluation:
 | **Dynotears** | max_lag, λ_w, λ_a, max_iter | 3×2×2×2×2 = 48 combinations |
 | **NTS-Notears** | max_lag, h_tol, ρ_max, λ₁, λ₂ | 3×2×2×2×2 = 48 combinations |
 
+
 ### Usage
 ```bash
 cd cd_zoo
@@ -165,18 +195,20 @@ conda activate cd_zoo_env
 
 # Single method evaluation
 python benchmark.py method=pcmci \
-    data_path=../rename_after_generation/my_dataset \
+    data_path=../example_saves/mcar_big/var/0_2026-03-26_15-39-43-848373 \
     method.max_lag=5
 
 # Full hyperparameter sweep on violation
 python run_degradation_experiment.py \
     method=var \
-    base_path=../rename_after_generation \
+    base_path=../example_saves/mcar_big/var \
     ds_name=conf_violation
 
 # Execute all methods on dataset
+# (If available)
 ./execute_all_methods.sh my_dataset
 ```
+
 
 ## 📊 3. Robustness Experiments Pipeline (`robustness_experiments/`)
 
@@ -186,10 +218,11 @@ Comprehensive analysis pipeline for evaluating method performance under assumpti
 
 The robustness evaluation follows a systematic 4-step pipeline with quality protocols:
 
-#### **Step 1: Result Extraction & Validation** 
+#### **Step 1: Result Extraction & Validation**
 ```bash
+cd .. # from cd_zoo to main_repo
 cd robustness_experiments
-python 1_extract_results.py ignore_passed=False
+python ../1_extract_results.py ignore_passed=False
 ```
 - Validates experimental results and data consistency
 - Aggregates raw method outputs into summary tables  
@@ -198,7 +231,7 @@ python 1_extract_results.py ignore_passed=False
 
 #### **Step 2: Performance Degradation Analysis**
 ```bash
-python 2_generate_curve_analysis.py \
+python ../2_generate_violation_curves.py \
     what=INST \
     method_selection="[varlingam]" \
     specific_selection=faith_inst
@@ -209,7 +242,7 @@ python 2_generate_curve_analysis.py \
 
 #### **Step 3: Summary Statistics Generation**
 ```bash
-python 3_export_summary_tables.py \
+python ../3_export_summary_tables.py \
     which_table=WCG \
     select_max_lag="[5,6]" \
     what=mean \
@@ -221,11 +254,13 @@ python 3_export_summary_tables.py \
 
 #### **Step 4: Visualization & Graphics**
 ```bash
+# (If available)
 python 4_generate_main_graphics.py export_as=pdf
 ```
 - Creates publication-ready figures
 - Generates robustness heatmaps and degradation plots
 - Exports comparative method analysis
+
 
 ### Data Regimes
 
@@ -284,40 +319,46 @@ python benchmark.py method=var \
 - **Flood Area Analysis**: Extreme weather robustness
 - **Multiple Graph Sampling Strategies**: Random, confounder, close-proximity
 
+
 ## 🔄 Complete Workflow
+
 
 ### 1. Data Generation
 ```bash
 cd synthetic_ds_generator
 # Generate all paper violations
-./create_all_violations.sh
+./create_all_violation_datasets.sh
 # Or generate custom dataset
 python generate_dataset.py -m name=custom_experiment
 ```
 
-### 2. Method Evaluation  
+
+### 2. Method Evaluation
 ```bash
-cd cd_zoo
+cd ../cd_zoo
 # Single method
-python benchmark.py method=pcmci data_path=../rename_after_generation/my_data
-# All methods with hyperparameter search
+python benchmark.py method=pcmci data_path=../example_saves/mcar_big/var/0_2026-03-26_15-39-43-848373
+# All methods with hyperparameter search (if available)
 ./execute_all_methods.sh my_dataset_name
 ```
 
+
 ### 3. Robustness Analysis
 ```bash
-cd robustness_experiments
+cd ../robustness_experiments
 # Extract and validate results
-python 1_extract_results.py path=../results/
-# Generate performance summaries  
-python 3_export_summary_tables.py which_table=WCG
-# Create visualizations
+python ../1_extract_results.py path=../cd_zoo/outputs/
+# Generate performance summaries
+python ../3_export_summary_tables.py which_table=WCG
+# Create visualizations (if available)
 python 4_generate_main_graphics.py
 ```
 
+
 ### 4. Ensemble Training (Optional)
 ```bash
-cd ensembling_experiments
+# (If ensembling_experiments/ is present)
+cd ../ensembling_experiments
 # Prepare training data
 python 5_transform_to_training_set.py
 # Train ensemble meta-learners
@@ -326,6 +367,7 @@ python 8_train_deep_ensembles.py
 ```
 
 ## 🛠️ Advanced Usage Examples
+
 
 ### Custom Violation Generation
 ```bash
@@ -338,26 +380,29 @@ python generate_dataset.py -m \
     generator.conf.conf_n.conf_strength=1.5
 ```
 
+
 ### Method Comparison Study
 ```bash
-cd cd_zoo
+cd ../cd_zoo
 # Compare methods on specific violation
 python run_degradation_experiment.py \
     method=pcmci,var,dynotears \
-    base_path=../rename_after_generation \
+    base_path=../example_saves/mcar_big/var \
     ds_name=nonlinear_violation \
     multirun=True
 ```
 
+
 ### Large-Scale Robustness Study
 ```bash
-cd robustness_experiments
+cd ../robustness_experiments
 # Process all results with custom metrics
-python 1_extract_results.py \
+python ../1_extract_results.py \
     path=large_experiment/ \
     performance_metrics="[AUROC,F1_max,Accuracy]" \
     automated_testing=True
 ```
+
 
 ## 🔧 Configuration Management
 
@@ -393,18 +438,21 @@ cd ../robustness_experiments
 python 1_extract_results.py path=../cd_zoo/outputs/
 ```
 
+
 ## 📚 Documentation
 
 Detailed documentation is available for each component:
 
 - **[Synthetic Data Generator](synthetic_ds_generator/README.md)**: Data generation setup and configuration
 - **[CD Zoo](cd_zoo/README.md)**: Method implementations and benchmarking
-- **[Robustness Experiments](robustness_experiments/README.md)**: Analysis pipeline details  
+- **[Robustness Experiments](robustness_experiments/README.md)**: Analysis pipeline details
+
 
 ## 🏆 Key Features & Benefits
 
+
 ### ✅ Comprehensive Coverage
-- **27+ Assumption Violations**: Most extensive coverage in literature
+- **33 Assumption Violations**: Most extensive coverage in literature
 - **15+ Methods**: State-of-the-art and classical approaches
 - **Multiple Graph Types**: Summary, lagged, and instantaneous causal graphs
 
@@ -423,6 +471,7 @@ Detailed documentation is available for each component:
 - **Hydra Configuration**: Flexible parameter management
 - **Extensive Examples**: Tutorials and usage patterns
 
+
 ## 🔬 Research Applications
 
 TCD Arena supports various research directions:
@@ -432,6 +481,7 @@ TCD Arena supports various research directions:
 - **Comparative Studies**: Head-to-head method comparison
 - **Ensemble Research**: Meta-learning for causal discovery
 - **Real-World Validation**: Application to practical datasets
+
 
 ## 📊 Reproducibility & Quality
 
