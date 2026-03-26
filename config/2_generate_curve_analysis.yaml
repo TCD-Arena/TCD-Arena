@@ -1,0 +1,13 @@
+path: "sample_summary/extracted/"
+out_path: "sample_summary/individual_curves/"
+what: "WCG"
+ignore_finished: True
+
+lag_spec: [3,4]
+performance_score: "SHD individual"
+specific_dataset: null
+format: "pdf"
+vertical_layout: False
+
+
+

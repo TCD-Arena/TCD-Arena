@@ -1,0 +1,22 @@
+base_path: ""
+res_path: "example_saves"
+out_path: "sample_summary/"
+data_name: "sample_datasets"
+
+method_runs: {
+     "var": 80,
+}
+
+ # some experiments only have half the runs as one of the data regimes
+ # is a hyperparameter or we enforce instantanous links
+half_size: ["length_small",
+             "length_big",
+              "conf_i_small",
+               "conf_i_big",
+               "faith_inst_big", 
+               "faith_inst_small"]
+specific_dataset: null # e.g. "length_small" to only analyze one dataset
+specific_graphs: ["INST", "WCG", "SG_max"]
+load_data_hps: True
+automated_testing: True
+ignore_passed: True

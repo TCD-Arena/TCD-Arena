@@ -1,19 +1,19 @@
-# Time Series Causal Discovery Arena (TCD Arena)
+# Welcome to Time Series Causal Discovery Arena (TCD-Arena)
 
-> **⚠️ Under Construction**: This repository is currently being prepared for public release. Some features and documentation may be incomplete.
 
-[![arXiv](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/) 
+[![arXiv](https://img.shields.io/badge/arXiv-paper-red)](https://openreview.net/forum?id=MtdrOCLAGY) 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green)]([LICENSE](https://opensource.org/license/mit))
 
 A comprehensive benchmarking framework for evaluating the robustness of causal discovery algorithms on time series data under various assumption violations.
 
 ## 🎯 Overview
 
-TCD Arena is a research platform designed to systematically evaluate how causal discovery methods perform when their key assumptions are violated. The framework provides:
+TCD Arena is a research platform designed to systematically evaluate how causal discovery methods perform when key assumptions are violated. The framework provides:
 
-- **🧪 Modular Synthetic Data Generation**: Advanced time series generator with 32+ configurable assumption violations
-- **🔧 Unified Method Interface**: Standardized evaluation of 15+ causal discovery algorithms  
+- **🧪 Modular Synthetic Data Generation**: Advanced time series generator with 33 configurable assumption violations
+- **🧪 Scalable violation intensities**: All 33 violations can be controlled in their intensity
+- **🔧 Unified Method Interface**: Standardized evaluation of 15 causal discovery algorithms 
 - **📊 Comprehensive Analysis Pipeline**: Automated robustness analysis and performance degradation tracking
 - **🤖 Ensemble Learning**: Meta-learning approaches for improved robustness
 
@@ -25,20 +25,50 @@ git clone https://github.com/your-repo/tcd_arena.git
 cd tcd_arena
 
 # Set up environment for synthetic data generation
-conda env create -f synthetic_ds_generator/synth_gen_env.yml
-conda activate synth_gen_env
+conda env create -f tcd_arena.yml
+conda activate tcd_arena
+```
 
-# Generate example synthetic dataset
-cd synthetic_ds_generator
-python generate_dataset.py -m name=example_dataset
+### Your first experiment: 
 
-# Set up causal discovery environment
-conda env create -f cd_zoo/cd_zoo_env.yml  
-conda activate cd_zoo_env
+#### 1. Data 
 
-# Run causal discovery benchmark example
-cd .cd_zoo
-python benchmark.py
+Depending on your needs, you can choose one of three ways to access data
+
+1. Download the data examples from via: 
+
+```bash
+wget https://github.com/CausalRivers/benchmark/releases/download/First_release/product.zip
+unzip product
+rm product.zip 
+```
+
+The example files hold the data for a single assumption violation (MCAR)
+All scripts in the repo can be executed with the dataset.
+If you want to test functionality of TCD-Arena, this is the best option
+
+
+2. Download the full dataset from HuggingFace here:
+
+https://huggingface.co/datasets/GideonStein/TCD-Arena/
+
+This is the full dataset we use in our publication, containing all 33 violations.
+If you want to score your own method on some (or all violations) this is your best option
+
+
+3. Regenerate the full dataset via functionality in synthetic_ds_generator
+
+We provide functionality in the data generator to full regenerate the data from scratch (fully seeded)
+We also include hashing functionality to test the exactness of the reproduction
+If you want to extend datasets, generate your own violations or alter existing once, this is your best option
+
+
+
+
+
+#### 2. Benchmarking
+
+python cd_zoo/scripts/benchmark.py
 ```
 
 Note, we include a placeholder cd_zoo here. 
@@ -47,6 +77,13 @@ To install the full cd_zoo run:
 rm cd_zoo -r
 git clone https://github.com/TCD-Arena/cd_zoo
 ```
+
+
+
+
+
+
+
 
 
 ## 📁 Project Structure
@@ -108,19 +145,7 @@ See the README in the synthetic_ds_generator for more details.
 
 Unified interface for 15+ causal discovery algorithms with standardized evaluation protocols.
 
-### Implemented Methods
 
-| Method | Type | Outputs | Deep Learning | Status |
-|--------|------|---------|---------------|--------|
-| **PCMCI/PCMCI+** | Constraint | Summary + Window | ❌ | ✅ Validated |
-| **VAR** | Granger | Summary + Window | ❌ | ✅ Validated |
-| **Dynotears** | Score | Summary + Window + Instant | ❌ | ✅ Validated |
-| **NTS-Notears** | Score | Summary + Window + Instant | ✅ | ✅ Validated |
-| **VarLiNGAM** | Noise+Granger | Summary + Window + Instant | ❌ | ✅ Validated |
-| **CDMI** | Information | Summary | ✅ | ✅ Validated |
-| **Causal Pretraining** | End-to-end | Summary + Window + Instant | ✅ | ✅ Validated |
-| **TCDF** | Deep Learning | Summary + Window | ✅ | ✅ Validated |
-| **CUTS/CUTS+** | Deep Learning | Summary + Window | ✅ | ✅ Validated |
 
 ### Hyperparameter Search Space
 
@@ -334,16 +359,6 @@ python 1_extract_results.py \
     automated_testing=True
 ```
 
-## 📊 Performance Metrics
-
-TCD Arena provides comprehensive evaluation metrics:
-
-- **AUROC**: Area under ROC curve (primary metric)
-- **F1-Max**: Maximum F1 score across thresholds  
-- **Accuracy**: Maximum accuracy across thresholds
-- **Individual vs Joint**: Per-sample and aggregated metrics
-- **Null Model Comparison**: Baseline performance validation
-
 ## 🔧 Configuration Management
 
 All components use Hydra for configuration:
@@ -352,46 +367,9 @@ All components use Hydra for configuration:
 - **Flexibility**: Command-line overrides for any parameter
 - **Modularity**: Separate configs for each component
 - **Scalability**: Easy parameter sweeps and multirun support
-## 🎓 Getting Started Guide
 
-### Prerequisites
-- Python 3.8+
-- Conda package manager
-- Git
 
-### Installation
 
-1. **Clone Repository**
-```bash
-git clone https://github.com/your-repo/tcd_arena.git
-cd tcd_arena
-```
-
-2. **Set Up Environments**
-```bash
-# Synthetic data generation environment
-conda env create -f synthetic_ds_generator/synth_gen_env.yml
-
-# Causal discovery methods environment  
-conda env create -f cd_zoo/cd_zoo_env.yml
-
-# Optional: CausalRivers integration
-cd ensembling_experiments/causalrivers
-./install.sh
-```
-
-3. **Test Installation**
-```bash
-# Generate test dataset
-cd synthetic_ds_generator
-conda activate synth_gen_env
-python generate_dataset.py -m name=test_install
-
-# Run test benchmark
-cd ../cd_zoo  
-conda activate cd_zoo_env
-python benchmark.py method=var data_path=../rename_after_generation/test_install
-```
 
 ### Tutorial: Your First Robustness Experiment
 
@@ -422,7 +400,6 @@ Detailed documentation is available for each component:
 - **[Synthetic Data Generator](synthetic_ds_generator/README.md)**: Data generation setup and configuration
 - **[CD Zoo](cd_zoo/README.md)**: Method implementations and benchmarking
 - **[Robustness Experiments](robustness_experiments/README.md)**: Analysis pipeline details  
-- **[Ensemble Learning](ensembling_experiments/README.md)**: Meta-learning approaches
 
 ## 🏆 Key Features & Benefits
 
@@ -534,5 +511,3 @@ TCD Arena is actively developed and maintained. Current focus areas:
 
 **TCD Arena**: *Advancing causal discovery through systematic robustness evaluation* 🚀 
 
-
-# Now we use

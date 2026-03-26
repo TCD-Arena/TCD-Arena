@@ -1,0 +1,11 @@
+path: "sample_summary/extracted/"
+which_table: "WCG"
+out_path: "sample_summary/performance_export/"
+performance_score: "SHD individual"
+select_max_lag: [3,4] # specify the max lags that should be used.
+what: "mean"
+export_method_specific_hps: True 
+no_size_grouping: False
+drop_methods: [] # drop specific methods from the summary tables, e.g. ["var"] to drop the var method.
+
+filter_datasets: "small" # specify datasets to include IF no size grouping is activated.
