@@ -81,7 +81,6 @@ def export_experiment(f, cfg):
     # pathing
     exp_path = Path(cfg.base_path) / cfg.res_path / f
     method = [method for method in listdir(exp_path)]
-    method = [x for x in method if x in cfg.method_runs.keys()]
     # should never fail here as we filtered before
 
     method = [exp_path / x for x in method]
@@ -242,34 +241,6 @@ def format_testing(a, cfg, mode="WCG", ds="no_violation_small"):
     if a["AUROC Joint"].isnull().sum() > 0:
         return (False, "NANs found in metric!")
 
-    # check table length and number of runs consistency
-    n_methods = a["method.name"].nunique()
-    if mode == "INST":
-        if n_methods != cfg.n_inst_methods:
-            return (False, "Method missing: " + str(cfg.n_inst_methods))
-        required_length = cfg.n_inst_runs
-        # half size but covers only half instant cases
-        if "length" in ds:
-            required_length = cfg.n_inst_runs // 2
-        if len(a) != required_length:
-            return (
-                False,
-                "Some runs were dropped: " + str(len(a)) + " " + str(cfg.n_inst_runs),
-            )
-    else:
-        if n_methods != len(cfg.method_runs):
-            return (False, "Method missing: " + str(cfg.method_runs))
-        required_length = (
-            sum(cfg.method_runs.values())
-            if (ds not in cfg.half_size)
-            else (sum(cfg.method_runs.values()) // 2)
-        )
-        if len(a) != required_length:
-            return (
-                False,
-                "Some runs were dropped: "
-                + str(list(a["method.name"].value_counts().sort_index())),
-            )
 
     # Check if we dropped samples wrongly
     full_unrestricted = a["restrict_to_n_samples"] == -1

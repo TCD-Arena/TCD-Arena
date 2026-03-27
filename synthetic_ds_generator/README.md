@@ -18,7 +18,7 @@ A comprehensive and modular synthetic time series generator for creating dataset
 
 ### Requirements
 ```bash
-conda env create -f synth_ts.yml
+conda env create -f ../tcd_arena.yml
 ```
 
 ### TCD-Arena datasets: 
@@ -35,6 +35,18 @@ To validate the generations, you can test them via the hashes of the original da
 cd tools_and_examples/component_tests
 python test_ds_determinism.sh /path/to/save/folder/ --use_saved   --only_check obs # otherwise full test
 ```
+
+These scripts also hold the configurations of the generator for each violation.
+Note, all scripts use the following Hyprparameters to cover various data conditions.
+
+| Parameter | Values | Purpose |
+|-----------|---------|---------|
+| **Length** | 250, 1000 | Short vs. long time series |
+| **Link Probability** | 0.075, 0.15 | Sparse vs. dense graphs |
+| **Structure Size** | Big, Small | Scalability analysis |
+| **Instantaneous Probability** | 0.0, 0.1 | With/without instant links |
+| **Violation Levels** | 5 levels | Severity graduation |
+| **Total Datasets** | **80 per violation, seperated via structure size** | Statistical robustness |
 
 
 ### Basic Usage

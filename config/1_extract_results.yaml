@@ -3,10 +3,6 @@ res_path: "example_saves"
 out_path: "sample_summary/"
 data_name: "sample_datasets"
 
-method_runs: {
-     "var": 80,
-}
-
  # some experiments only have half the runs as one of the data regimes
  # is a hyperparameter or we enforce instantanous links
 half_size: ["length_small",
