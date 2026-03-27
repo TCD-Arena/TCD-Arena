@@ -7,7 +7,7 @@
 limit_n="$1"
 filter_string="$2"
 
-cmd="python cd_zoo/benchmark.py -m method=var data_base_path=data_release method.base_on=coefficients,p_values"
+cmd="python cd_zoo/benchmark.py -m method=var data_base_path=data_release/ method.base_on=coefficients,p_values"
 cmd2="ds_name="
 cmd3="which_dataset='range(0,40)'"
 
@@ -40,7 +40,7 @@ for data_path in data_release/*/; do
         exit 1
     fi
     echo "$cmd $cmd2$folder_name $cmd3$cmd4"
-    #eval "$cmd $cmd2$folder_name $cmd3$cmd4"
+    eval "$cmd $cmd2$folder_name $cmd3$cmd4"
     count=$((count+1))
 done
 
