@@ -1,4 +1,4 @@
-# Welcome to Time Series Causal Discovery Arena (TCD-Arena)
+# Time Series Causal Discovery Arena (TCD-Arena)
 
 
 [![arXiv](https://img.shields.io/badge/arXiv-paper-red)](https://openreview.net/forum?id=MtdrOCLAGY) 
