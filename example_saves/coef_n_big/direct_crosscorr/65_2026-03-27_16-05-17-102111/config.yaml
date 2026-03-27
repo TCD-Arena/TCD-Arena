@@ -1,0 +1,17 @@
+data_base_path: data_release/
+ds_name: coef_n_big
+data_path: ${data_base_path}${ds_name}
+save_path: example_saves
+run_name: ${hydra:job.num}
+which_dataset: 21
+verbose: 1
+restrict_to_n_samples: -1
+restriction_start_index: 0
+per_sample_metrics: true
+save: true
+save_predictions: true
+method:
+  name: direct_crosscorr
+  max_lag: 6
+ci_test:
+  _target_: tigramite.independence_tests.parcorr.ParCorr

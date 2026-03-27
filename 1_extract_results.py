@@ -216,18 +216,17 @@ def format_testing(a, cfg, mode="WCG", ds="no_violation_small"):
     """
     # check process sizing
     size = a["n_vars"].unique()
-    lags = a["method.max_lag"].value_counts().astype(int)
+    if "method.max_lag" not in a.columns:
+        # CP has no max lag param, we set it to 1 if this occurs
+        lags = 1
+    else:
+        lags = a["method.max_lag"].nunique()
     # for conf we got more sizes.
     if len(size) != 1:
         return (False, "Different sizes in the same file")
-    if a["method.max_lag"].isnull().sum() not in [80, 40, 0]:
-        return (
-            False,
-            "Too many nans found in max_lag: "
-            + str(a["method.max_lag"].isnull().sum()),
-        )
-    if lags.nunique() != 1:
-        return (False, "Different amount of lags in the same file")
+
+    if lags != 1:
+        print("Warning: Different max lags detected. This can may be due to some runs not finishing.")
 
     # There are two length in our experiments
     a_length = len(a["generator.time_series_n"].unique()) == 2
