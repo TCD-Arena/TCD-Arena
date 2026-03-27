@@ -28,7 +28,7 @@ All components use Hydra for configuration allowing for Hyperparameter sweeps an
 
 | **Category**         | **Example Violation** | **Description**                       |
 |----------------------|----------------------|---------------------------------------|
-| Confounding          | V_conf,              | External/internal common causes        |
+| Confounding          | V_conf              | External/internal common causes        |
 | Measurement Noise    | V_obs                | Various observational noise types      |
 | Faithfulness         | V_faith              | Path cancellation, near-zero coeffs    |
 | Functional Form      | V_func               | Nonlinear effects                     |
