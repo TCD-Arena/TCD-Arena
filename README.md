@@ -83,11 +83,11 @@ rm data_release.zip
 
 
 This is the full dataset we use in our publication, containing all 33 violations.
-If you want to score your own method on some (or all violations) this is your best option.
+If you want to score your own method on some (or all) violations this is your best option.
 
 
 
-3. **Regenerate the full dataset** using the synthetic data generator:
+3. **Generate the full dataset** using the synthetic data generator:
 Use the scripts in `synthetic_ds_generator/` to fully regenerate the data from scratch (fully seeded). 
 Hashing functionality is included to verify exact reproduction.
  This is the best option if you want to extend datasets, generate your own violations, or alter existing ones.
@@ -145,7 +145,7 @@ python 3_export_summary_tables.py
 ```
 
 With the this functionality, you can recreate the performance of GVAR on the MCAR violation (NSHD: 0.81, See p. 52 in the main paper)
-If you are interested in recreating any other results please download the Full CD_zoo first: [Full CD ZOO](synthetic_ds_generator/README.md) for details.
+If you are interested in recreating any other results please download the Full CD_zoo first: [Full CD ZOO](https://github.com/TCD-Arena/cd_zoo).
 
 
 
@@ -179,12 +179,6 @@ main_repo/
 │   ├── components/                # Modular generation components
 │   ├── config/                    # Hydra configuration files
 │   └── data_scripts/              # Data scripts
-├── robustness_experiments/        # 📊 Robustness analysis pipeline
-│   ├── README.md
-├── example_saves/                 # Example outputs (pre-generated)
-├── sample_datasets/               # Sample datasets for quick tests
-├── sample_summary/                # Example summary outputs
-```
 
 
 ### 📊 Generating custom datasets:
@@ -216,34 +210,8 @@ Detailed documentation is available for each component:
 
 - **[Synthetic Data Generator](synthetic_ds_generator/README.md)**: Data generation setup and configuration
 - **[CD Zoo](cd_zoo/README.md)**: Method implementations and benchmarking
-- **[Robustness Experiments](robustness_experiments/README.md)**: Analysis pipeline details
 
 
-
-
-## 🤝 Contributing
-
-We welcome contributions to TCD Arena! Areas for contribution:
-
-### New Methods
-Add causal discovery algorithms to the CD Zoo:
-1. Implement method wrapper in `cd_zoo/methods/`
-2. Add configuration in `cd_zoo/config/method/`
-3. Test with validation protocol
-4. Submit pull request  full CD_ZOO)
-
-### New Violations  
-Extend the synthetic data generator:
-1. Implement violation in `synthetic_ds_generator/components/`
-2. Add configuration options
-3. Validate violation effects
-
-### Analysis Tools
-Enhance the analysis pipeline:
-1. Add scripts to `robustness_experiments/`
-2. Include quality protocols
-3. Provide usage examples
-4. Update documentation
 
 ## 📄 Citation
 
@@ -272,6 +240,32 @@ TCD Arena is actively developed and maintained. Current focus areas:
 - **Violation Coverage**: Extending assumption violation types
 - **Performance Optimization**: Improving computational efficiency
 - **Documentation**: Enhanced tutorials and examples
+
+
+### 🤝 Contributing
+
+We welcome contributions to TCD Arena! Areas for contribution:
+
+#### New Methods
+Add causal discovery algorithms to the CD Zoo:
+1. Implement method wrapper in `cd_zoo/methods/`
+2. Add configuration in `cd_zoo/config/method/`
+3. Test with validation protocol
+4. Submit pull request  full CD_ZOO)
+
+#### New Violations  
+Extend the synthetic data generator:
+1. Implement violation in `synthetic_ds_generator/components/`
+2. Add configuration options
+3. Validate violation effects
+
+#### Analysis Tools
+Enhance the analysis pipeline:
+1. Add scripts to `robustness_experiments/`
+2. Include quality protocols
+3. Provide usage examples
+4. Update documentation
+
 
 ---
 
